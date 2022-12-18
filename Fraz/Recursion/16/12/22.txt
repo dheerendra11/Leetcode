@@ -294,3 +294,100 @@ class Solution {
         return result;
     }
 }
+
+
+
+
+// 77
+
+class Solution {
+
+    public void combine_helper(int idx, int k, List<Integer> sans, List<List<Integer>> fans){
+        if(k == sans.size()){
+            List<Integer> temp = new ArrayList<>(sans);
+            fans.add(temp);
+            return;
+        }
+
+        for(int i = idx; i > 0; i--){
+            sans.add(i);
+            combine_helper(i-1, k, sans, fans);
+            sans.remove(sans.size() - 1);
+        }
+    }
+
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        combine_helper(n, k, new ArrayList<>(), result);
+        return result;
+    }
+}
+
+
+// 40
+
+class Solution {
+
+     public void combinationSum2_helper(int[] arr, int idx, int target, List<Integer> sans, List<List<Integer>> fans, HashSet<List<Integer>> hs){
+        if(target < 0){
+            return;
+        }
+
+        if(hs.contains(sans)){
+               return;
+        }
+
+        List<Integer> temp1 = new ArrayList<>(sans);
+        hs.add(temp1);
+
+
+        if(target == 0){
+            List<Integer> temp = new ArrayList<>(sans);
+            fans.add(temp);
+            return;
+        }
+        
+        for(int i = idx; i < arr.length; i++){
+            sans.add(arr[i]);
+            target -= arr[i];
+            combinationSum2_helper(arr, i+1, target, sans, fans, hs);
+            target += arr[i];
+            sans.remove(sans.size() - 1);
+        }
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        combinationSum2_helper(candidates, 0, target, new ArrayList<>(), result, new HashSet<List<Integer>>());
+        return result;
+    }
+}
+
+
+// 216
+
+class Solution {
+
+    public void combinationSum3_helper(int idx, int k, int target, List<Integer> sans, List<List<Integer>> fans){
+        if(k == sans.size() && target == 0){
+            List<Integer> temp = new ArrayList<>(sans);
+            fans.add(temp);
+            return;
+        }
+
+        for(int i = idx; i > 0; i--){
+            sans.add(i);
+            target -= i;
+            combinationSum3_helper(i-1, k, target, sans, fans);
+            target += i;
+            sans.remove(sans.size() - 1);
+        }
+    }
+
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        combinationSum3_helper(9, k, n, new ArrayList<>(), result);
+        return result;
+    }
+}
