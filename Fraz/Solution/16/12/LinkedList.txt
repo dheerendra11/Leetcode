@@ -1,0 +1,91 @@
+// get middle 
+
+class Solution {
+    public ListNode middleNode(ListNode head) {
+
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}
+
+
+// 237
+
+class Solution {
+    public void deleteNode(ListNode node) {
+        ListNode prev = node;
+        while(node.next != null){
+            node.val = node.next.val;
+            prev = node;
+            node = node.next;
+        }
+        prev.next = null;
+    }
+}
+
+
+// 1290
+
+class Solution {
+
+    public int getLength(ListNode head){
+        int length = 0;
+        while(head != null){
+            length++;
+            head = head.next;
+        }
+        return length;
+    }
+
+    public int getDecimalValue(ListNode head) {
+       int power = getLength(head) - 1;
+       int decimalNumber = 0;
+
+       while(head != null){
+           decimalNumber += head.val* Math.pow(2, power--);
+           head = head.next;
+       }
+       return decimalNumber;
+    }
+}
+
+
+// 203
+
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummyhead = new ListNode(-1, head);
+        ListNode curr = dummyhead;
+        while(curr != null && curr.next != null){
+            while(curr.next != null && curr.next.val == val){
+                curr.next = curr.next.next;
+            }
+            curr = curr.next;
+        }
+
+        return dummyhead.next; 
+    }
+}
+
+
+// 141 
+
+Method - 1
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        while(head != null){
+            if(head.val == (int)1e9)
+                return true;
+            head.val = (int)1e9;
+            head = head.next;
+        }
+        return false;
+    }
+}
+
+Method - 2
